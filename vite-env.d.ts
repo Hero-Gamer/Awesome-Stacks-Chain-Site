@@ -1,4 +1,4 @@
-// Removed missing reference to vite/client
+// Fix: Removed reference to vite/client as the type definition was missing
 
 declare namespace NodeJS {
   interface ProcessEnv {
