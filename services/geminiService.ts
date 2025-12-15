@@ -20,13 +20,16 @@ Rules:
 `;
 
 export const initializeChat = (): void => {
-  if (!process.env.API_KEY) {
+  // The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+  const apiKey = process.env.API_KEY;
+
+  if (!apiKey) {
     console.warn("Gemini API Key missing");
     return;
   }
   
   try {
-    genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    genAI = new GoogleGenAI({ apiKey });
     chatSession = genAI.chats.create({
       model: "gemini-2.5-flash",
       config: {
@@ -41,11 +44,13 @@ export const initializeChat = (): void => {
 export const sendMessageToGemini = async (message: string): Promise<string> => {
   if (!chatSession) {
     initializeChat();
-    if (!chatSession) return "System Offline: API Key configuration required.";
   }
 
+  const session = chatSession;
+  if (!session) return "System Offline: API Key configuration required.";
+
   try {
-    const result = await chatSession!.sendMessage({ message });
+    const result = await session.sendMessage({ message });
     return result.text || "No response received.";
   } catch (error) {
     console.error("Gemini Error:", error);
