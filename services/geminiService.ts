@@ -20,11 +20,11 @@ Rules:
 `;
 
 export const initializeChat = (): void => {
-  // The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+  // The API key is injected by Vite's `define` plugin at build time.
   const apiKey = process.env.API_KEY;
 
   if (!apiKey) {
-    console.warn("Gemini API Key missing");
+    console.error("Nexus AI Error: API Key is missing. Please check Vercel Environment Variables (VITE_API_KEY).");
     return;
   }
   
@@ -46,14 +46,16 @@ export const sendMessageToGemini = async (message: string): Promise<string> => {
     initializeChat();
   }
 
-  const session = chatSession;
-  if (!session) return "System Offline: API Key configuration required.";
+  // Double check if session was created successfully
+  if (!chatSession) {
+    return "System Offline: Configuration Error. Please ensure the API Key is set correctly in Vercel settings as VITE_API_KEY.";
+  }
 
   try {
-    const result = await session.sendMessage({ message });
+    const result = await chatSession.sendMessage({ message });
     return result.text || "No response received.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Error: Communication link severed. Please try again later.";
+    return "Connection Error: Unable to reach the Neural Network. Please try again later.";
   }
 };
