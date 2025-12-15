@@ -6,7 +6,7 @@ import {
   CircleDollarSign, 
   Image as ImageIcon, 
   Code2, 
-  Pickaxe, 
+  Cpu, 
   Users, 
   X,
   Zap,
@@ -31,7 +31,7 @@ const CATEGORY_ICONS: Record<Category, React.ReactNode> = {
   [Category.NFTS]: <ImageIcon size={20} />,
   [Category.GAMES]: <Gamepad2 size={20} />,
   [Category.DEV_TOOLS]: <Code2 size={20} />,
-  [Category.MINING]: <Pickaxe size={20} />,
+  [Category.MINING]: <Cpu size={20} />,
   [Category.LEARNING]: <GraduationCap size={20} />,
   [Category.COMMUNITY]: <Users size={20} />,
 };

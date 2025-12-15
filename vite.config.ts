@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
-  const env = loadEnv(mode, process.cwd(), '');
+  // We cast process to any to avoid TypeScript errors if the Node types are missing 'cwd'.
+  const env = loadEnv(mode, (process as any).cwd(), '');
 
   // CRITICAL: Check Vercel system env vars (process.env) FIRST, then loaded .env files.
   // We look for VITE_API_KEY or API_KEY.
