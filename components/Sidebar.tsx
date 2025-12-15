@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, onSelectCategory, isO
             {navItems.map((cat) => (
               <motion.button
                 key={cat}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, x: 5 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   onSelectCategory(cat);
